@@ -36,7 +36,7 @@ function App() {
           image: images[Math.floor(i / 2)],
         };
       })
-    // .sort(() => Math.random() - 0.5)
+    .sort(() => Math.random() - 0.5)
   );
 
   const handleClick = (item) => {
@@ -70,7 +70,15 @@ function App() {
 
 
   return (
-      <>
+      <div className='game-box'>
+        <div className='time-move'>
+          <div>
+            time:
+          </div>
+          <div>
+            move:{numberClick2}
+          </div>
+        </div>
         <div className="memory-game">
           {items.map((item, i) => (
               <Item
@@ -85,7 +93,7 @@ function App() {
         <button className="btn-reset" onClick={mmd}>
           reset
         </button>
-      </>
+      </div>
   );
 }
 
