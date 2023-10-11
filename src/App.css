@@ -4,6 +4,8 @@
   align-items: center;
   flex-direction: column;
   gap: 30px;
+  width: 23%;
+  margin: auto;
 }
 .memory-game {
   gap: 10px;
@@ -32,6 +34,6 @@
 }
 .time-move{
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   width: 100%;
 }

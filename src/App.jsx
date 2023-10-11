@@ -26,9 +26,7 @@ function App() {
   const [selectedItemIds, setSelectedItemIds] = useState([]);
   const [numberClick, setNumberClick] = useState(0);
   const [numberClick2, setNumberClick2] = useState(40);
-
-  const [items, setItems] = useState(
-    () =>
+  const generateRandom = () =>
       Array.from({ length: 16 }).map((_, i) => {
         return {
           id: i + 1,
@@ -36,8 +34,8 @@ function App() {
           image: images[Math.floor(i / 2)],
         };
       })
-    .sort(() => Math.random() - 0.5)
-  );
+          .sort(() => Math.random() - 0.5)
+  const [items, setItems] = useState(generateRandom);
 
   const handleClick = (item) => {
     if (numberClick < 2 && numberClick2 > 0) {
@@ -62,8 +60,10 @@ function App() {
     }
   };
 
-  const mmd= () => {
-    setSelectedItemIds(items.map((i)=>i.id));
+  const resetGame= () => {
+    const newItems = generateRandom()
+    setSelectedItemIds(newItems.map((i)=>i.id));
+    setItems(newItems)
     setTimeout(() => {
       setSelectedItemIds([])
     }, 1000);}
@@ -90,8 +90,8 @@ function App() {
               />
           ))}
         </div>
-        <button className="btn-reset" onClick={mmd}>
-          reset
+        <button className="btn-reset" onClick={resetGame}>
+          شروع دوباره
         </button>
       </div>
   );
