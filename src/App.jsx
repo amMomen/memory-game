@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import image1Url from "@/assets/image-1.png";
 import image2Url from "@/assets/image-2.png";
 import image3Url from "@/assets/image-3.png";
@@ -24,28 +24,40 @@ import Item from "./components/Item";
 
 function App() {
   const [selectedItemIds, setSelectedItemIds] = useState([]);
-  const [items, setItems] = useState(() =>
-      Array.from({ length: 16 })
-          .map((_, i) => {
-            return {
-              id: i + 1,
-              identifier: Math.floor(i / 2),
-              image: images[Math.floor(i / 2)],
-            };
-          })
-          .sort(() => Math.random() - 0.5)
+  const [numberClick, setNumberClick] = useState(0);
+  const [numberClick2, setNumberClick2] = useState(40);
+
+  const [items, setItems] = useState(
+    () =>
+      Array.from({ length: 16 }).map((_, i) => {
+        return {
+          id: i + 1,
+          identifier: Math.floor(i / 2),
+          image: images[Math.floor(i / 2)],
+        };
+      })
+    // .sort(() => Math.random() - 0.5)
   );
 
   const handleClick = (item) => {
-    setSelectedItemIds([...selectedItemIds, item.id]);
-    if (selectedItemIds.length % 2 !== 0) {
-      const lastItemId = selectedItemIds[selectedItemIds.length - 1];
-      const lastItem = items.find((item) => item.id === lastItemId);
+    if (numberClick < 2 && numberClick2 > 0) {
+      setNumberClick2(numberClick2 - 1);
+      setNumberClick(numberClick + 1);
+      setSelectedItemIds([...selectedItemIds, item.id]);
+      if (selectedItemIds.length % 2 !== 0) {
+        const lastItemId = selectedItemIds[selectedItemIds.length - 1];
+        const lastItem = items.find((item) => item.id === lastItemId);
 
-      if (item.identifier !== lastItem.identifier) {
-        setTimeout(() => {
-          setSelectedItemIds(selectedItemIds.filter((i) => i !== lastItemId));
-        }, 1000);
+        if (item.identifier !== lastItem.identifier) {
+          setTimeout(() => {
+            setSelectedItemIds(selectedItemIds.filter((i) => i != lastItemId));
+            setNumberClick(0);
+          }, 1000);
+
+          console.log(numberClick);
+        } else {
+          setNumberClick(0);
+        }
       }
     }
   };
