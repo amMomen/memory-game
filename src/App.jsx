@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import image1Url from "@/assets/image-1.png";
 import image2Url from "@/assets/image-2.png";
 import image3Url from "@/assets/image-3.png";
@@ -24,17 +24,16 @@ import Item from "./components/Item";
 
 function App() {
   const [selectedItemIds, setSelectedItemIds] = useState([]);
-
   const [items, setItems] = useState(() =>
-    Array.from({ length: 16 })
-      .map((_, i) => {
-        return {
-          id: i + 1,
-          identifier: Math.floor(i / 2),
-          image: images[Math.floor(i / 2)],
-        };
-      })
-      .sort(() => Math.random() - 0.5)
+      Array.from({ length: 16 })
+          .map((_, i) => {
+            return {
+              id: i + 1,
+              identifier: Math.floor(i / 2),
+              image: images[Math.floor(i / 2)],
+            };
+          })
+          .sort(() => Math.random() - 0.5)
   );
 
   const handleClick = (item) => {
@@ -45,26 +44,36 @@ function App() {
 
       if (item.identifier !== lastItem.identifier) {
         setTimeout(() => {
-          setSelectedItemIds(selectedItemIds.filter((i) => i != lastItemId));
-        }, 500);
+          setSelectedItemIds(selectedItemIds.filter((i) => i !== lastItemId));
+        }, 1000);
       }
     }
   };
 
+  const mmd= () => {
+    setSelectedItemIds(items.map((i)=>i.id));
+    setTimeout(() => {
+      setSelectedItemIds([])
+    }, 1000);}
+
+
   return (
-    <>
-      <div className="memory-game">
-        {items.map((item, i) => (
-          <Item
-            key={item.id}
-            index={i + 1}
-            image={item.image}
-            onClick={() => handleClick(item)}
-            isShow={selectedItemIds.includes(item.id)}
-          />
-        ))}
-      </div>
-    </>
+      <>
+        <div className="memory-game">
+          {items.map((item, i) => (
+              <Item
+                  key={item.id}
+                  index={i + 1}
+                  image={item.image}
+                  onClick={() => handleClick(item)}
+                  isShow={selectedItemIds.includes(item.id)}
+              />
+          ))}
+        </div>
+        <button className="btn-reset" onClick={mmd}>
+          reset
+        </button>
+      </>
   );
 }
 
