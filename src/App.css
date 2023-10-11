@@ -6,7 +6,7 @@
   gap: 30px;
 }
 .memory-game {
-  gap: 15px;
+  gap: 10px;
   display: grid;
   grid-template-rows: repeat(3, 1fr);
   grid-template-columns: repeat(4, 1fr);
